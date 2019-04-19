@@ -18,4 +18,8 @@ Simple Parser which uses Compiler design concepts.
  3. See the file again
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/3.PNG)
  
+ OR
+ 
+ Use the GUI ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)
+ 
  

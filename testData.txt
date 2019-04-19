@@ -1,0 +1,10 @@
+public class Demo
+{ private 
+a;
+/**sdvs
+adv*/
+void main(private
+	Integer a
+	) { /**sdvs
+adv*/
+} }

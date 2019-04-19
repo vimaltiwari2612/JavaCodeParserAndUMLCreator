@@ -9,6 +9,8 @@ public class JavaIndentator implements AbstractIndentator{
 	
 	private JavaIndentator(){
 		//can't use new operator now
+		if(this.symbols == null) this.symbols = new ArrayList<String>();
+		this.symbols.clear();
 	}
 
 	public static JavaIndentator getInstance(){
@@ -40,7 +42,8 @@ public class JavaIndentator implements AbstractIndentator{
 	}
 	//symbol table formation
 	private void prepareSymbolTable() throws Exception{
-		this.symbols = new ArrayList<String>();
+		if(this.symbols == null) this.symbols = new ArrayList<String>();
+		this.symbols.clear();
 		while(this.file.getFilePointer() < this.file.length()){
 			String[] tokens = this.file.readLine().trim().split(" ");
 			this.symbols.addAll(Arrays.asList(tokens));
@@ -68,8 +71,9 @@ public class JavaIndentator implements AbstractIndentator{
 	
 	//main parsing logic
 	//lexical anaylsis
-	private void indentCodeUsingSymbolTable(){
-		parsedLines = new ArrayList<String>();
+	private void indentCodeUsingSymbolTable() throws Exception{
+		if(this.parsedLines == null) this.parsedLines = new ArrayList<String>();
+		this.parsedLines.clear();
 		LinkedList<String> localStack = new LinkedList<String>();
 		String currentLine = "";
 		for(String element : this.symbols){
@@ -95,7 +99,7 @@ public class JavaIndentator implements AbstractIndentator{
 			else{	
 				//if any open line found
 				currentLine+=element +" \n";
-				this.addLine(currentLine, localStack.size()); 
+				this.addLine(currentLine, localStack.size());
 				currentLine="";
 				//add to stack
 				if(element.contains("{") || element.contains("/*")) {
@@ -103,9 +107,36 @@ public class JavaIndentator implements AbstractIndentator{
 				}
 			}
 		}
+		if(this.parsedLines.isEmpty()) throw new Exception("Please enter a valid code.");
 	}
 	//add it to global list
 	private void addLine(String currentLine, Integer tabCount){
 		this.parsedLines.add(this.getIndentationForThisLine(tabCount)+currentLine); 
+	}
+	
+	///**********************FOR GUI************************///////////////
+	public String getIndentedCode(String code){
+		String toBeReturned = "";
+		try{
+			prepareSymbolTable(code);
+			indentCodeUsingSymbolTable();
+			for(String line : parsedLines){
+				toBeReturned+=line;
+			}
+		}catch(Exception e){
+			toBeReturned="";
+			System.out.println(e.getMessage());
+		}
+		return toBeReturned;
+	}
+	
+	private void prepareSymbolTable(String code){
+		if(this.symbols == null) this.symbols = new ArrayList<String>();
+		this.symbols.clear();
+		code = code.replaceAll("\n"," ");
+		for(String c : code.split(" ")){
+				if(!c.trim().isEmpty())
+				this.symbols.add(c.trim());
+		}
 	}
 }

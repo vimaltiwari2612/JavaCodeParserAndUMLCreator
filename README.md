@@ -10,15 +10,20 @@ Simple Parser which uses Compiler design concepts.
  How it works : https://github.com/vimaltiwari2612/JavaCodeParser
  
  1. give an unindented code file as parameter to main class.
+ 
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/1.PNG)
  
  2. run the code
+ 
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/2.PNG)
   
  3. See the file again
+ 
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/3.PNG)
  
- OR
+ 
+                                                     OR
+                                                     
  
  Use the GUI : run "java IndentatorScreen"
  

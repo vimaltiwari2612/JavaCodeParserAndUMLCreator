@@ -73,10 +73,15 @@ public class JavaIndentator implements AbstractIndentator{
 		LinkedList<String> localStack = new LinkedList<String>();
 		String currentLine = "";
 		for(String element : this.symbols){
+			//trim the symbol
 			element = element.trim();
+			//check for  { - open bracket , ; - semicolon, /* - comment opening
 			if(!element.contains("{") && !element.contains(";") && !element.contains("/*")){
+				//check for closing } , */
 				if(element.contains("}") || element.contains("*/")) {
+					// get the top element of stack , it would be either { or /*
 					String topElement = localStack.peekLast();
+					// if matched, remove it and close the line
 					if(topElement!=null && (topElement.contains("{") || topElement.contains("/*"))){
 						localStack.removeLast();
 						currentLine+=element +" \n";
@@ -88,10 +93,11 @@ public class JavaIndentator implements AbstractIndentator{
 				currentLine += element + " ";
 			}
 			else{	
-				
+				//if any open line found
 				currentLine+=element +" \n";
 				this.addLine(currentLine, localStack.size()); 
 				currentLine="";
+				//add to stack
 				if(element.contains("{") || element.contains("/*")) {
 					localStack.add(element);
 				}

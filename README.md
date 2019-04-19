@@ -20,6 +20,8 @@ Simple Parser which uses Compiler design concepts.
  
  OR
  
- Use the GUI ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)
+ Use the GUI : run "java IndentatorScreen"
+ 
+ ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)
  
  

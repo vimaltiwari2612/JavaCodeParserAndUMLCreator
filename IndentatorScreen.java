@@ -20,7 +20,7 @@ public class IndentatorScreen extends JFrame{
 		textArea2 = new JTextArea(x,y);
 		Font font = new Font("Times New Roman", Font.BOLD, 15);
         textArea1.setFont(font);
-        textArea1.setForeground(Color.BLUE);
+        textArea1.setForeground(Color.RED);
 		textArea2.setFont(font);
         textArea2.setForeground(Color.BLUE);
 		jScrollPane1 = new JScrollPane(textArea1);
@@ -45,11 +45,12 @@ public class IndentatorScreen extends JFrame{
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			String indentedCode = JavaIndentator.getInstance().getIndentedCode(textArea1.getText());
-			if(!indentedCode.trim().isEmpty())
-				textArea2.setText(indentedCode);
-			else
-				JOptionPane.showMessageDialog(null, "Please Enter some valid code.");
+			try{
+				textArea2.setText(JavaIndentator.getInstance().getIndentedCode(textArea1.getText()));
+			}catch(Exception ex){
+				textArea2.setText("");
+				JOptionPane.showMessageDialog(null,ex.getMessage());
+			}
 		  }
 		});
     }

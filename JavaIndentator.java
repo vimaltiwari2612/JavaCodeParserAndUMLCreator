@@ -4,6 +4,7 @@ public class JavaIndentator implements AbstractIndentator{
 
 	private ArrayList<String> symbols;
 	private ArrayList<String> parsedLines;
+	private LinkedList<String> localStack;
 	private static JavaIndentator INSTANCE;
 	private RandomAccessFile file;
 	
@@ -74,7 +75,8 @@ public class JavaIndentator implements AbstractIndentator{
 	private void indentCodeUsingSymbolTable() throws Exception{
 		if(this.parsedLines == null) this.parsedLines = new ArrayList<String>();
 		this.parsedLines.clear();
-		LinkedList<String> localStack = new LinkedList<String>();
+		if(this.localStack == null) this.localStack = new LinkedList<String>();
+		this.localStack.clear();
 		String currentLine = "";
 		for(String element : this.symbols){
 			//trim the symbol
@@ -107,7 +109,7 @@ public class JavaIndentator implements AbstractIndentator{
 				}
 			}
 		}
-		if(this.parsedLines.isEmpty()) throw new Exception("Please enter a valid code.");
+		if(this.parsedLines.isEmpty() || !this.localStack.isEmpty()) throw new Exception("Please enter a valid JAVA code.");
 	}
 	//add it to global list
 	private void addLine(String currentLine, Integer tabCount){
@@ -115,17 +117,12 @@ public class JavaIndentator implements AbstractIndentator{
 	}
 	
 	///**********************FOR GUI************************///////////////
-	public String getIndentedCode(String code){
+	public String getIndentedCode(String code) throws Exception{
 		String toBeReturned = "";
-		try{
-			prepareSymbolTable(code);
-			indentCodeUsingSymbolTable();
-			for(String line : parsedLines){
-				toBeReturned+=line;
-			}
-		}catch(Exception e){
-			toBeReturned="";
-			System.out.println(e.getMessage());
+		prepareSymbolTable(code);
+		indentCodeUsingSymbolTable();
+		for(String line : parsedLines){
+			toBeReturned+=line;
 		}
 		return toBeReturned;
 	}

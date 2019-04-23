@@ -4,7 +4,7 @@ a;
 /**sdvs
 adv*/
 void main(private
-	Integer a
-	) { /**sdvs
+Integer a
+) { /**sdvs
 adv*/
 } }

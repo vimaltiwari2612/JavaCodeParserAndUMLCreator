@@ -2,27 +2,37 @@ import java.util.*;
 import java.io.*;
 public class JavaIndentator implements AbstractIndentator{
 
-	private ArrayList<String> symbols;
-	private ArrayList<String> parsedLines;
-	private LinkedList<String> localStack;
-	private static JavaIndentator INSTANCE;
-	private RandomAccessFile file;
+	private ArrayList<String> symbols; //symbol table
+	private ArrayList<String> parsedLines; //indented lines
+	private LinkedList<String> localStack; //keep track of tokens while parsing
+	private ArrayList<String> literals; // literals for parsing
+	private static JavaIndentator INSTANCE; //singleton pattern
+	private RandomAccessFile file; //for file input
 	
 	private JavaIndentator(){
 		//can't use new operator now
 		if(this.symbols == null) this.symbols = new ArrayList<String>();
 		this.symbols.clear();
+		if(this.literals == null)
+			literals = new ArrayList<String>(Arrays.asList(this.populateLiterals())); 
 	}
-
+	
+	//Only one instance
 	public static JavaIndentator getInstance(){
 		if(INSTANCE == null)
 			INSTANCE = new JavaIndentator();
 		return INSTANCE;
 	}
 	
+	//literal table
+	private String[] populateLiterals(){
+		String[] literals = new String[]{"{","}",";","/*","*/","(",")"};
+		return literals;
+	}
+	
 	public void parse(){
 		try{
-			prepareSymbolTable();
+			prepareSymbolTable(null);
 			indentCodeUsingSymbolTable();
 			reWriteTheFile();
 			System.out.println("Parsing Completed!");
@@ -41,16 +51,67 @@ public class JavaIndentator implements AbstractIndentator{
 	public void setFileStream(RandomAccessFile file){
 		this.file = file;
 	}
+	
 	//symbol table formation
-	private void prepareSymbolTable() throws Exception{
+	private void prepareSymbolTable(String code) throws Exception{
 		if(this.symbols == null) this.symbols = new ArrayList<String>();
 		this.symbols.clear();
-		while(this.file.getFilePointer() < this.file.length()){
-			String[] tokens = this.file.readLine().trim().split(" ");
-			this.symbols.addAll(Arrays.asList(tokens));
+		if(code == null){
+			while(this.file.getFilePointer() < this.file.length()){
+				String[] tokens = this.file.readLine().trim().split(" ");
+				this.addToSymbolTable(tokens);
+			}
+		}
+		else{
+			code = code.replaceAll("\n"," ");
+			for(String c : code.split(" ")){
+				if(!c.trim().isEmpty()){
+					this.addToSymbolTable(new String[]{c});
+				}
+			}
 		}
 	}
-
+	
+	//get the filtered tokens and populate the Symbol table
+	private void addToSymbolTable(String[] tokens){
+		if(tokens!=null && tokens.length > 0){
+			for(String token : tokens)
+				{
+					ArrayList<String> filteredTokens = this.filterToken(token);
+					if(filteredTokens != null)
+						this.symbols.addAll(filteredTokens);
+				}
+		}
+	}
+	
+	
+	/*
+	*	filtering tokens
+	*    For Example :  main(){ is consists of 4 token  main , (,),{
+	*/
+	private ArrayList<String> filterToken(String token){
+		ArrayList<String> filtered = null;
+		String[] splitted = token.trim().split("");
+		String temp = "";
+		for(String str : splitted){
+			if(this.literals.contains(str)){
+				if(filtered == null)
+					filtered = new ArrayList<String>();
+				if(!temp.trim().equals(""))
+					filtered.add(temp);
+				filtered.add(str);
+				temp = "";
+			}
+			else{
+				temp+=str;
+			}
+		}
+		if(filtered == null) filtered = new ArrayList<String>();
+		if(!temp.trim().equals("")) filtered.add(temp);
+		return filtered;
+	}
+	
+	//for rewriting the given file with indented code
 	private void reWriteTheFile() throws Exception{
 		this.file.seek(0);
 		for(String line : parsedLines){
@@ -60,6 +121,7 @@ public class JavaIndentator implements AbstractIndentator{
 		this.file.close();
 	}
 	
+	//tab indentations 
 	private String getIndentationForThisLine(Integer count){
 		String tabs = "";
 		while(count > 0)
@@ -125,15 +187,5 @@ public class JavaIndentator implements AbstractIndentator{
 			toBeReturned+=line;
 		}
 		return toBeReturned;
-	}
-	
-	private void prepareSymbolTable(String code){
-		if(this.symbols == null) this.symbols = new ArrayList<String>();
-		this.symbols.clear();
-		code = code.replaceAll("\n"," ");
-		for(String c : code.split(" ")){
-				if(!c.trim().isEmpty())
-				this.symbols.add(c.trim());
-		}
 	}
 }

@@ -227,6 +227,7 @@ public class JavaIndentator implements AbstractIndentator{
 						continue;
 					}
 					else{
+						//adding to stack, these are extras
 						localStack.add(element);
 					}
 				}

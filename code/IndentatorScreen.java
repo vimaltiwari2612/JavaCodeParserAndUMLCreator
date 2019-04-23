@@ -100,9 +100,9 @@ public class IndentatorScreen extends JFrame{
 					errorArea.setText("No Errors.");
 				}
 			}catch(Exception ex){
-				//textArea2.setText("");
-				//symbolTableTextArea.setText("");
-				//errorArea.setText("");
+				textArea2.setText("");
+				symbolTableTextArea.setText("");
+				errorArea.setText("");
 				JOptionPane.showMessageDialog(null,ex.getMessage());
 			}
 		  }

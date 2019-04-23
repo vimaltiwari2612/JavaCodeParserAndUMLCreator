@@ -7,7 +7,21 @@ Simple Parser which uses Compiler design concepts.
  
  This code works for Java Code. It can be made for other languages too using the same concepts.
  
- How it works : https://github.com/vimaltiwari2612/JavaCodeParser
+ How to run : 
+ 
+ FOR GUI users -
+ 
+ 1. download the Zip (https://github.com/vimaltiwari2612/JavaCodeParser)
+ 2. click on Parser.bat
+ 
+ ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)
+ 
+ 
+ 
+                                                     OR
+                                                     
+ 
+ For File users -
  
  1. give an unindented code file as parameter to main class.
  
@@ -27,8 +41,4 @@ Simple Parser which uses Compiler design concepts.
  
  Use the GUI : 
  1. download the zip.
- 2. click on Parser.bat
- 
- ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)
- 
  

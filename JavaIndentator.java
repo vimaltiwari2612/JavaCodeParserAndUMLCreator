@@ -17,6 +17,62 @@ public class JavaIndentator implements AbstractIndentator{
 			literals = new ArrayList<String>(Arrays.asList(this.populateLiterals())); 
 	}
 	
+	//check if code is a valid code 
+	public Boolean isValidCode(){
+		if(this.parsedLines.isEmpty() || !this.localStack.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	//return the errors
+	public String getParsingErrors(){
+		String parsingErrors = "";
+		if(!this.isValidCode()){
+			if(this.parsedLines.isEmpty()){
+				parsingErrors +="Not a valid JAVA Code.\n\n";
+			}
+			
+			if(!this.localStack.isEmpty()){
+				parsingErrors +="Tokens left to be parsed : "+this.localStack.size()+"\n";
+				for(String token :  this.localStack){
+					parsingErrors+="\t"+token+"\n";
+				}
+			}
+		}
+		return parsingErrors;
+	}
+	
+	//return the formated symbol table
+	public String getSymbolTable(){
+		String formatedSymbolTable = "";
+		ArrayList<String> literalsInCode = new ArrayList<String>();
+		ArrayList<String> keywordsInCode = new ArrayList<String>();
+		if(this.symbols != null){
+			for(String token :  symbols){
+				if(this.literals.contains(token)){
+					if(!literalsInCode.contains(token))
+						literalsInCode.add(token);
+				}
+				else {
+					if (!keywordsInCode.contains(token))
+						keywordsInCode.add(token);
+				}
+			}
+		}
+		Integer totalUniqueLiterals = keywordsInCode.size() + literalsInCode.size();
+		formatedSymbolTable += "Total Literals : "+totalUniqueLiterals+"\n\n";
+		formatedSymbolTable += "\tKeywords : "+keywordsInCode.size()+"\n";
+		for(String kw : keywordsInCode){
+			formatedSymbolTable += "\t"+kw + "\n";
+		}
+		formatedSymbolTable +="\n\n\tSymbols : "+literalsInCode.size()+"\n";
+		for(String lit : literalsInCode){
+			formatedSymbolTable += "\t"+lit + "\n";
+		}
+		return formatedSymbolTable;
+	}
+	
 	//Only one instance
 	public static JavaIndentator getInstance(){
 		if(INSTANCE == null)
@@ -26,6 +82,7 @@ public class JavaIndentator implements AbstractIndentator{
 	
 	//literal table
 	private String[] populateLiterals(){
+		//considering /* and *\/ as single unit
 		String[] literals = new String[]{"{","}",";","/*","*/","(",")"};
 		return literals;
 	}
@@ -91,7 +148,19 @@ public class JavaIndentator implements AbstractIndentator{
 	*/
 	private ArrayList<String> filterToken(String token){
 		ArrayList<String> filtered = null;
-		String[] splitted = token.trim().split("");
+		ArrayList<String> splitted = new ArrayList<String>();
+		/*
+		* Adding special case for catching comments written with /* and *\/
+		*/
+		int openCommentIndex = token.indexOf("/*");
+		int closeCommentIndex = token.indexOf("*/");
+		if(openCommentIndex != -1 && openCommentIndex < closeCommentIndex){
+		
+		}
+		else if(closeCommentIndex != -1 && closeCommentIndex < openCommentIndex){
+			
+		}
+		splitted.addAll(Arrays.asList(token.trim().split("")));
 		String temp = "";
 		for(String str : splitted){
 			if(this.literals.contains(str)){
@@ -171,8 +240,8 @@ public class JavaIndentator implements AbstractIndentator{
 				}
 			}
 		}
-		if(this.parsedLines.isEmpty() || !this.localStack.isEmpty()) throw new Exception("Please enter a valid JAVA code.");
 	}
+	
 	//add it to global list
 	private void addLine(String currentLine, Integer tabCount){
 		this.parsedLines.add(this.getIndentationForThisLine(tabCount)+currentLine); 

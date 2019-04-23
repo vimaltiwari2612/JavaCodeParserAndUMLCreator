@@ -25,7 +25,9 @@ Simple Parser which uses Compiler design concepts.
                                                      OR
                                                      
  
- Use the GUI : run "java IndentatorScreen"
+ Use the GUI : 
+ 1. download the zip.
+ 2. click on Parser.bat
  
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)
  

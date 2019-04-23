@@ -35,10 +35,6 @@ Simple Parser which uses Compiler design concepts.
  
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/3.PNG)
  
- 
-                                                     OR
-                                                     
- 
- Use the GUI : 
- 1. download the zip.
- 
+
+
+THANKS!!

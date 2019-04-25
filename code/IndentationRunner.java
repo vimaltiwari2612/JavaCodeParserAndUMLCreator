@@ -6,6 +6,6 @@ public class IndentationRunner{
         	file.seek(0);
 		JavaIndentator javaIndentator = JavaIndentator.getInstance();
 		javaIndentator.setFileStream(file);
-		javaIndentator.parse();   
+		javaIndentator.parse(null);   
 	}
 }

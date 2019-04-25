@@ -90,7 +90,7 @@ public class IndentatorScreen extends JFrame{
 				JavaIndentator ji = JavaIndentator.getInstance();
 				String code = textArea1.getText();
 				if(code.trim().equals("")) throw new Exception("Enter some Input!!");
-				textArea2.setText(ji.getIndentedCode(code.trim()));
+				textArea2.setText(ji.parse(code.trim()));
 				symbolTableTextArea.setText(ji.getSymbolTable());
 				if(!ji.isValidCode()){
 					JOptionPane.showMessageDialog(null,"This Code won't compile. It's not a valid JAVA code.");

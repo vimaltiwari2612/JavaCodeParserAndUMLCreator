@@ -87,22 +87,26 @@ public class JavaIndentator implements AbstractIndentator{
 		return literals;
 	}
 	
-	public void parse(){
+	//called by src
+	//main method which is responsible to do everything
+	public String parse(String code){
+		String response = null;
 		try{
-			prepareSymbolTable(null);
+			prepareSymbolTable(code);
 			indentCodeUsingSymbolTable();
-			reWriteTheFile();
+			response = generateResponse(code);
 			System.out.println("Parsing Completed!");
 		}catch(Exception e){
 			System.out.println("Error while parsing === "+e.getMessage());
 		}finally{
 			try{
 				//free the resources
-				this.file.close();
+				if(this.file != null) this.file.close();
 			}catch(IOException io){
 				System.out.println("Error while closing file === "+io.getMessage());
 			}
 		}
+		return response;
 	}
 	
 	public void setFileStream(RandomAccessFile file){
@@ -180,14 +184,24 @@ public class JavaIndentator implements AbstractIndentator{
 		return filtered;
 	}
 	
-	//for rewriting the given file with indented code
-	private void reWriteTheFile() throws Exception{
-		this.file.seek(0);
-		for(String line : parsedLines){
-			this.file.write(line.getBytes());
-			this.file.writeBytes(System.getProperty("line.separator"));
+	//if param = null : rewriting the given file with indented code
+	//if not null, return the string.
+	private String generateResponse(String code) throws Exception{
+		String toBeReturned = "";
+		if(code == null){
+			this.file.seek(0);
+			for(String line : parsedLines){
+				this.file.write(line.getBytes());
+				this.file.writeBytes(System.getProperty("line.separator"));
+			}
+			this.file.close();
 		}
-		this.file.close();
+		else{
+			for(String line : parsedLines){
+				toBeReturned+=line;
+			}
+		}
+		return toBeReturned;
 	}
 	
 	//tab indentations 
@@ -249,16 +263,5 @@ public class JavaIndentator implements AbstractIndentator{
 	//add it to global list
 	private void addLine(String currentLine, Integer tabCount){
 		this.parsedLines.add(this.getIndentationForThisLine(tabCount)+currentLine); 
-	}
-	
-	///**********************FOR GUI************************///////////////
-	public String getIndentedCode(String code) throws Exception{
-		String toBeReturned = "";
-		prepareSymbolTable(code);
-		indentCodeUsingSymbolTable();
-		for(String line : parsedLines){
-			toBeReturned+=line;
-		}
-		return toBeReturned;
 	}
 }

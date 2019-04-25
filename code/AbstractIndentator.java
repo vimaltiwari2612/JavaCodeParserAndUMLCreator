@@ -1,4 +1,4 @@
 public interface AbstractIndentator{
-	public void parse();
+	public String parse(String code);
 }
 

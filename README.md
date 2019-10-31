@@ -36,5 +36,24 @@ Simple Parser which uses Compiler design concepts.
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/3.PNG)
  
 
+---------------------------------------------------------------------------------------------------------------------------------------
+=================================================== UML CREATION ADDED==================================================================
+---------------------------------------------------------------------------------------------------------------------------------------
+ 1. Click on the "Get UML"
+ 
+ ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/5.PNG)
+ 
+ 2. You will the UML created screen. Click on save to save it in "uml" folder in package
 
-THANKS!!
+ ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/6.PNG)
+ 
+ 3. Move to "uml" folder and use image however you want!!!
+ 
+ 
+ THANKS!!
+ 
+ 
+ 
+ 
+ 
+

@@ -1,4 +1,4 @@
-# JavaCodeParser
+# JavaCodeParserAndUMLCreator
 
 Simple Parser which uses Compiler design concepts.
  1. Lexical analysis

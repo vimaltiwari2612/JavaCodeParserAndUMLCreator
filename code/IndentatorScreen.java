@@ -7,15 +7,16 @@ import javax.swing.border.*;
 public class IndentatorScreen extends JFrame{
 	private JPanel panel1,panel2,codePanel,symbolTablePanel,nonCodePanel,errorPanel;
 	private JLabel label ;
-	private JButton button;
+	private JButton button,umlButton;
 	private JScrollPane jScrollPane1,jScrollPane2, jScrollPane3,jScrollPane4;
-    	private JTextArea textArea1,textArea2, symbolTableTextArea,errorArea;	
+    private JTextArea textArea1,textArea2, symbolTableTextArea,errorArea;	
 	private TitledBorder border1, border2,border3,border4;
 
-    	public IndentatorScreen() {
+	public IndentatorScreen() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		this.setTitle("JAVA Code Parser");
 		button = new JButton("Parse");
+		umlButton = new JButton("Get UML");
 		Dimension d=Toolkit.getDefaultToolkit().getScreenSize();
 		int x = 30;
 		int y = 35;
@@ -26,10 +27,10 @@ public class IndentatorScreen extends JFrame{
 		errorArea = new JTextArea(x - 16,y+2);
 		errorArea.setEditable(false);
 		Font font = new Font("Times New Roman", Font.BOLD, 15);
-        	textArea1.setFont(font);
-        	textArea1.setForeground(Color.RED);
+		textArea1.setFont(font);
+		textArea1.setForeground(Color.RED);
 		textArea2.setFont(font);
-        	textArea2.setForeground(Color.BLUE);
+		textArea2.setForeground(Color.BLUE);
 		textArea2.setEditable(false);
 		symbolTableTextArea.setFont(font);
 		symbolTableTextArea.setForeground(Color.BLACK);
@@ -53,8 +54,9 @@ public class IndentatorScreen extends JFrame{
 		panel2.add(jScrollPane2);
 		codePanel = new JPanel();
 		codePanel.setLayout(new FlowLayout());
-        	codePanel.add(panel1);
+		codePanel.add(panel1);
 		codePanel.add(button);
+		codePanel.add(umlButton);
 		codePanel.add(panel2);
 		nonCodePanel = new JPanel();
 		nonCodePanel.setLayout(new FlowLayout());
@@ -76,12 +78,12 @@ public class IndentatorScreen extends JFrame{
 		this.add(codePanel);
 		this.add(nonCodePanel);
 		this.nonCodePanel.setLocation(x,y);
-       		this.setSize(1000, 950);
-		this.setResizable(false);
+		this.setSize(950, 850);
+		this.setResizable(true);
 		this.setLocation(d.width/2-this.getWidth()/2,d.height/2-this.getHeight()/2);
-        	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	this.setVisible(true);
-	
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+
 		button.addActionListener(new ActionListener()
 		{
 		  public void actionPerformed(ActionEvent e)
@@ -107,7 +109,33 @@ public class IndentatorScreen extends JFrame{
 			}
 		  }
 		});
-    }
+		
+		umlButton.addActionListener(new ActionListener()
+		{
+		  public void actionPerformed(ActionEvent e)
+		  {
+			textArea2.setText("");
+			symbolTableTextArea.setText("");
+			errorArea.setText("");
+			try{
+				String code = textArea1.getText();
+				if(code.trim().equals("")) throw new Exception("Enter some Input!!");
+				String output = JavaUMLCreator.getInstance().createUMLData(code.trim());
+				JFrame frame = new JFrame();
+				frame.setBackground(Color.WHITE);
+				frame.setDefaultLookAndFeelDecorated(true);
+				frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+				frame.setContentPane(new UMLScreen(output));
+				frame.setSize(500, 700);
+				frame.setVisible(true);
+			}catch(Exception ex){
+				textArea2.setText("");
+				JOptionPane.showMessageDialog(null,ex.getMessage());
+			}
+		  }
+		  
+		});
+	}
 	
 	public static void main(String...arg){
 		new IndentatorScreen();

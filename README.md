@@ -12,7 +12,7 @@ Simple Parser which uses Compiler design concepts.
  
  FOR GUI users -
  
- 1. download the Zip (https://github.com/vimaltiwari2612/JavaCodeParser)
+ 1. download the Zip (https://github.com/vimaltiwari2612/JavaCodeParserAndUMLCreator)
  2. click on Parser.bat
  
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/4.PNG)

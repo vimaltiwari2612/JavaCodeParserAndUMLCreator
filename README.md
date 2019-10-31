@@ -47,7 +47,7 @@ Simple Parser which uses Compiler design concepts.
  
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/5.PNG)
  
- 2. You will the UML created screen. Click on save to save it in "uml" folder in package
+ 2. You will get the UML created screen. Click on save to save it in "uml" folder in package
 
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/6.PNG)
  

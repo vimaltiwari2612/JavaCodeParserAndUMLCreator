@@ -40,6 +40,9 @@ Simple Parser which uses Compiler design concepts.
 ---------------------------------------------------------------------------------------------------------------------------------------
 =================================================== UML CREATION ADDED==================================================================
 ---------------------------------------------------------------------------------------------------------------------------------------
+ 
+ Create UML diagrams with class code. Convert your code into UML direclty using this tool. It can convert any OOP based code into UML.
+  
  1. Click on the "Get UML"
  
  ![screenshot](https://github.com/vimaltiwari2612/JavaCodeParser/blob/master/screenshots/5.PNG)
@@ -52,9 +55,4 @@ Simple Parser which uses Compiler design concepts.
  
  
  THANKS!!
- 
- 
- 
- 
- 
 
